@@ -2,7 +2,11 @@ import React from 'react';
 
 const ListItem = (props) => (
   <div>
-    { props.item.description }
+    <li>
+    { props.item['1. symbol'] }
+    { props.item['2. name'] }
+    </li>
+
   </div>
 )
 
