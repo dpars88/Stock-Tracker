@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-const List = (props) => (
+const StockList = (props) => (
   <div>
-    <h4> List Component </h4>
+    <h4> Current Portfolio </h4>
     There are { props.items.length } items.
     { props.items.map(item => <ListItem item={item}/>)}
   </div>
 )
 
-export default List;
+export default StockList;
