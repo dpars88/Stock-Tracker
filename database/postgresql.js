@@ -1,4 +1,5 @@
 const Pool = require('pg').Pool;
+const moment = require('moment');
 
 const pool = new Pool({
   user: 'd.parson',
@@ -37,8 +38,12 @@ getUserStocks = (req, res) => {
         if (err) {
           return err
         }
-        console.log('this is after second query', resultTwo.rows)
-        res.send(resultTwo.rows)
+        if (resultTwo.rows.length > 0) {
+          console.log('this is after second query', resultTwo.rows)
+          res.send({data: resultTwo.rows, user: req.user, id:userId})
+        } else {
+          res.send({user: req.user, id: userId, data:resultTwo.rows})
+        }
       })
     } else {
       res.send(req.user);
@@ -47,7 +52,35 @@ getUserStocks = (req, res) => {
 }
 
 addToUserStocks = (req, res) => {
+  const data = req.data['Global Quote'];
+  const symbol = data['01. symbol'];
+  let price = data['05. price'];
+  price = parseFloat(price);
+  price = Number(price);
+  const now = moment();
+  const todayDate = moment(now).format('YYYY-MM-DD')
+  const userAdd = req.userId;
 
+  const query = {
+    text: 'INSERT INTO userportfolio(id, stock_symbol, price_added, date_added) VALUES ($1, $2, $3, $4)',
+    values: [userAdd, symbol, price, todayDate]
+  }
+  pool.query(query, (err, result) => {
+    if (err) {
+      return console.error(err)
+    }
+    const queryThree = {
+      text: 'SELECT * FROM userportfolio WHERE id = $1',
+      values: [userAdd],
+    }
+    pool.query(queryThree, (err, result) => {
+      if (err) {
+        return console.error(err)
+      }
+      console.log('this is after selectionig all from userportfolio in DB', result.rows)
+      res.send(result.rows)
+    })
+  })
 }
 
 addUser = (req, res) => {

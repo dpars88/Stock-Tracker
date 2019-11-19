@@ -25,30 +25,39 @@ class PortfolioMain extends React.Component {
     }
 
     this.logOut = this.logOut.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitLogin = this.handleSubmitLogin.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleNewUserSubmit = this.handleNewUserSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
+    this.handleAddStock = this.handleAddStock.bind(this);
   }
 
   handleSearch(event) {
     const symbol = event.target.value;
-    Axios.get(`/search/${symbol}`)
-      .then((response) => {
-        console.log('this should be the search response from API', response.data.bestMatches);
-        this.setState({
-          searchItems: response.data.bestMatches
+    if(symbol.length > 0) {
+      Axios.get(`/search/${symbol}`)
+        .then((response) => {
+          console.log('this should be the search response from API', response.data.bestMatches);
+          var data = response.data.bestMatches;
+          data = data.slice(0,4);
+          this.setState({
+            searchItems: data
+          })
         })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        });
+      this.setState({
+        value: event.target.value
       })
-      .catch((error) => {
-        console.log(error);
+    } else {
+      this.setState({
+        searchItems: []
       })
-      .finally(() => {
-      });
-    this.setState({
-      value: event.target.value
-    })
+    }
   }
 
   handleNewUserSubmit(event) {
@@ -65,7 +74,8 @@ class PortfolioMain extends React.Component {
           createUserName: '',
           createPassword: '',
           userName: '',
-          userPassword: ''
+          userPassword: '',
+          userId: 0
         })
       })
 
@@ -90,25 +100,28 @@ class PortfolioMain extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  handleSubmitLogin(event) {
 
     const username = this.state.userName;
     const password = this.state.userPassword;
-    // const sendObj ={};
-    // sendObj['username'] = username;
-    // sendObj['password'] = password;
-    if (username.length < 5 && password < 5) {
+    if (username.length < 5 && password < 6) {
       alert('Username or password inccorrect')
     } else {
       Axios.get(`/login/${username}/${password}`)
         .then((response) => {
-          console.log('this is response in client', response);
-          if(response.data !== username) {
+          const stringName = username.toString();
+          console.log('this is response from DB user',response.data.user)
+          console.log('this is string name', stringName);
+          if (response.data.user === stringName) {
+            console.log('this is response adter logging in',response.data)
+            const responseData = response.data.data;
             this.setState({
-              stockList: response.data,
+              stockList: response.data.data,
+              userId: response.data.id,
               loggedIn: true,
               newUser: false
             })
+            console.log('this is state after logging in', this.state)
           } else {
             alert('Incorrect Login')
           }
@@ -116,14 +129,28 @@ class PortfolioMain extends React.Component {
         .catch(function (error) {
           console.log(error);
         })
-        .then( function () {
+        .then(function () {
         });
     }
     event.preventDefault();
   }
 
+  handleAddStock(event) {
+    const symbol = this.state.value;
+    const loggedInUserId = this.state.userId;
+    Axios.get(`/add/${symbol}/${loggedInUserId}`)
+      .then((response) => {
+        console.log('this should be the stock added plus others', response.data)
+        this.setState({
+          stockList: response.data,
+          value: ''
+        })
+      })
+    event.preventDefault()
+  }
+
   logOut() {
-    this.setState ({
+    this.setState({
       loggedIn: false,
       newUser: false
     })
@@ -138,7 +165,7 @@ class PortfolioMain extends React.Component {
         <div>
           <div>
             <h2>Sign In To Get Started!</h2>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmitLogin}>
               <label>
                 Username
                 <input
@@ -206,10 +233,10 @@ class PortfolioMain extends React.Component {
           </div>
         </div>
       )
-    } else if (this.state.loggedIn === true && this.state.newUser !== true) {
+    } else if (this.state.loggedIn === true && this.state.newUser !== true && this.state.stockList.length > 0) {
       return (
         <div>
-          Welcome *USERNAME* or First Name
+          Welcome back {this.state.userName}!
           <div>
             <div>
               <button onClick={this.logOut}>
@@ -217,7 +244,7 @@ class PortfolioMain extends React.Component {
               </button>
             </div>
             <h3>Search And Add To Your Portfolio</h3>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleAddStock}>
               <label>
                 Search For A Stock!
             <input type="text" value={this.value} onChange={this.handleSearch} />
@@ -229,11 +256,41 @@ class PortfolioMain extends React.Component {
             <SearchedList items={this.state.searchItems} />
           </div>
           <div>
-            <StockList items={this.state.portfolioItems} />
+            <StockList items={this.state.stockList} />
+          </div>
+          <div>
+
           </div>
         </div>
       )
-    }
+      } else if (this.state.loggedIn === true && this.state.newUser !== true && this.state.stockList.length === 0) {
+        return (
+          <div>
+            Welcome back {this.state.userName}!
+            <div>
+              <div>
+                <button onClick={this.logOut}>
+                  Log Out
+                </button>
+              </div>
+              <h3>Search And Add To Your Portfolio</h3>
+              <form onSubmit={this.handleAddStock}>
+                <label>
+                  Search For A Stock!
+              <input type="text" value={this.value} onChange={this.handleSearch} />
+                </label>
+                <input type="submit" value="Add To Portfolio" />
+              </form>
+            </div>
+            <div>
+              <SearchedList items={this.state.searchItems} />
+            </div>
+            <div>
+
+            </div>
+          </div>
+        )
+      }
   }
 }
 

@@ -4,6 +4,8 @@ const ListItem = (props) => (
   <div>
     <li>
     { props.item['1. symbol'] }
+    <br>
+    </br>
     { props.item['2. name'] }
     </li>
 

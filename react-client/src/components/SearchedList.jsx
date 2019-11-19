@@ -5,7 +5,7 @@ const SearchedList = (props) => (
   <div>
     <div>
       <ul>
-    { props.items.map(item => <ListItem item={item}/>)}
+    { props.items.map(item => <ListItem key={item['9. matchScore']} item={item}/>)}
       </ul>
     </div>
   </div>

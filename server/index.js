@@ -16,10 +16,24 @@ app.use(bodyParser.json());
 // EFQT5ERZWOCD2ZBP
 
 app.get('/search/:id', function (req, res) {
-  Axios.get(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${req.params.id}&apikey=EFQT5ERZWOCD2ZBP`)
+  Axios.get(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${req.params.id}&apikey=FCXT01X6H9P25PU0`)
     .then(function(response) {
       //console.log(response.data);
       res.send(response.data);
+    })
+})
+
+app.get('/add/:id/:user', function (req, res) {
+  console.log(req.params.id)
+  console.log(req.params.user)
+  Axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.id}&apikey=PY5TE4O1HV3HVT2S`)
+    .then((response) => {
+      console.log(response.data)
+      const dbInfo = {};
+      dbInfo['data'] = response.data;
+      dbInfo['userId'] = req.params.user;
+      console.log('this is my new made up object with a nested object and a userId', dbInfo);
+      db.addToUserStocks(dbInfo, res)
     })
 })
 
