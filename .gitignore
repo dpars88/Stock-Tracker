@@ -1,1 +1,4 @@
 node_modules
+./database-mongo/index.js
+./database-mysql/index.js
+angular-client

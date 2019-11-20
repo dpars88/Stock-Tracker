@@ -5,6 +5,7 @@ import $ from 'jquery';
 import Axios from 'axios';
 import SearchedList from './SearchedList.jsx';
 import data from '../../../sampleAPIdata.js';
+//import styles from '../../styles/main.css';
 
 class PortfolioMain extends React.Component {
   constructor(props) {
@@ -235,7 +236,7 @@ class PortfolioMain extends React.Component {
       )
     } else if (this.state.loggedIn === true && this.state.newUser !== true && this.state.stockList.length > 0) {
       return (
-        <div>
+        <div >
           Welcome back {this.state.userName}!
           <div>
             <div>
