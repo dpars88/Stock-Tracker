@@ -12,7 +12,6 @@ class PortfolioMain extends React.Component {
     this.state = {
       portfolioItems: [],
       searchItems: [],
-      noSearchItems: [],
       stockList: [],
       user: '',
       value: '',
@@ -35,18 +34,8 @@ class PortfolioMain extends React.Component {
   }
 
   handleSearch(event) {
-    console.log('this is event target', event.target.value);
     const symbol = event.target.value;
-    this.setState({
-      searchItems: []
-    })
-    if (symbol.length === 0) {
-      this.setState({
-        searchItems: [],
-        value: event.target.value
-      })
-      console.log(this.state);
-    } else if (symbol.length >= 1) {
+    if(symbol.length > 0) {
       Axios.get(`/search/${symbol}`)
         .then((response) => {
           console.log('this should be the search response from API', response.data.bestMatches);
@@ -63,6 +52,10 @@ class PortfolioMain extends React.Component {
         });
       this.setState({
         value: event.target.value
+      })
+    } else {
+      this.setState({
+        searchItems: []
       })
     }
   }
