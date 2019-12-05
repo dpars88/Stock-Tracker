@@ -35,6 +35,9 @@ class PortfolioMain extends React.Component {
 
   handleSearch(event) {
     const symbol = event.target.value;
+    this.setState({
+      searchItems: []
+    })
     if(symbol.length > 0) {
       Axios.get(`/search/${symbol}`)
         .then((response) => {
