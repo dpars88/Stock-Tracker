@@ -83,6 +83,10 @@ addToUserStocks = (req, res) => {
   })
 }
 
+addHistoricalPrice = (req, res) => {
+  // want to add historical prices from date added up to most recent, will have to do a get request for daily or weekly adjusted prices which returns 20+ years of data and only add in data that had not been added yet to historical prices in database which shouldn't be a lot when logging in new but will need to check date of when stock was added, then check latest price that is in database for that stock, and get all new prices since that date and add to database. OR can just look up historical prices each time logging in which might be even easier. Maybe can find an API that is completely FREE and use that to get weekly or daily adjust prices to then fill out a chart or graph of some sort
+}
+
 addUser = (req, res) => {
   const query = {
     text: 'INSERT INTO userinfo(user_name, user_email, user_password) VALUES ($1, $2, $3)',
