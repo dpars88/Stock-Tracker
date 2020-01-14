@@ -6,6 +6,7 @@ class SearchedList extends React.Component {
     super(props);
   }
   render() {
+    var count = 0;
     if (this.props.items.length === 0) {
       return (
         <div></div>
@@ -15,7 +16,7 @@ class SearchedList extends React.Component {
         <div>
           <div>
             <ul>
-            { this.props.items.map(item => <ListItem key={item['9. matchScore']} item={item}/>)}
+            { this.props.items.map(item => <ListItem key={count ++} item={item}/>)}
             </ul>
           </div>
         </div>
