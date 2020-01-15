@@ -119,12 +119,31 @@ class PortfolioMain extends React.Component {
           if (response.data.user === stringName) {
             console.log('this is response adter logging in',response.data)
             const responseData = response.data.data;
-            this.setState({
-              stockList: response.data.data,
-              userId: response.data.id,
-              loggedIn: true,
-              newUser: false
-            })
+            const existingUserStocks = response.data.data; //array of objects
+
+            if (existingUserStocks.length > 0) {
+              const stockSymbolArr = [];
+              existingUserStocks.map(item => {
+                stockSymbolArr.push(item.stock_symbol)
+              })
+              currentPriceArr = [];
+              for (var t = 0; t < stockSymbolArr.length; t ++) {
+                Axios.get(`/price/${stockSymbolArr[t]}`)
+                  .then((response) => {
+                    currentPriceArr.push(response.data.data)
+                    ////////////////////////// NEED TO SEE IF THIS WORKS
+                    /////////////////////////////////////
+                  })
+              }
+            } else {
+              this.setState({
+                stockList: response.data.data,
+                userId: response.data.id,
+                loggedIn: true,
+                newUser: false
+              })
+            }
+
             console.log('this is state after logging in', this.state)
           } else {
             alert('Incorrect Login')
