@@ -31,6 +31,7 @@ class PortfolioMain extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.handleAddStock = this.handleAddStock.bind(this);
+    this.handleRemoveStock = this.handleRemoveStock.bind(this);
   }
 
   handleSearch(event) {
@@ -150,6 +151,10 @@ class PortfolioMain extends React.Component {
         })
       })
     event.preventDefault()
+  }
+
+  handleRemoveStock(event) {
+
   }
 
   logOut() {
