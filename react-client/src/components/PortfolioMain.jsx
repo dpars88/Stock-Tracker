@@ -126,13 +126,14 @@ class PortfolioMain extends React.Component {
               existingUserStocks.map(item => {
                 stockSymbolArr.push(item.stock_symbol)
               })
-              currentPriceArr = [];
+              const currentPriceArr = [];
               for (var t = 0; t < stockSymbolArr.length; t ++) {
                 Axios.get(`/price/${stockSymbolArr[t]}`)
                   .then((response) => {
-                    currentPriceArr.push(response.data.data)
+                    currentPriceArr.push(response.data)
                     ////////////////////////// NEED TO SEE IF THIS WORKS
                     /////////////////////////////////////
+                    console.log('this should be an array of prices of stocks in the portfolio', currentPriceArr)
                   })
               }
             } else {

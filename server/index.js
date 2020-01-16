@@ -37,6 +37,15 @@ app.get('/add/:id/:user', function (req, res) {
     })
 })
 
+app.get('/price/:symbol', function (req, res) {
+  //console.log(req.params.symbol);
+  Axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${req.params.symbol}&outputsize=compact&apikey=EFQT5ERZWOCD2ZBP`)
+    .then((response) => {
+      //console.log(response.data);
+      res.send(response.data);
+    })
+})
+
 app.post('/save', function(req, res) {
   db.addUser(req.body, res)
 })
