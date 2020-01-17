@@ -5,6 +5,7 @@ import $ from 'jquery';
 import Axios from 'axios';
 import SearchedList from './SearchedList.jsx';
 import data from '../../../sampleAPIdata.js';
+import Chart from './Chart.jsx';
 
 class PortfolioMain extends React.Component {
   constructor(props) {
@@ -298,7 +299,7 @@ class PortfolioMain extends React.Component {
             <StockList items={this.state.stockList} />
           </div>
           <div>
-
+            <Chart />
           </div>
         </div>
       )
