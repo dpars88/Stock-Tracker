@@ -13,6 +13,8 @@ class PortfolioMain extends React.Component {
       portfolioItems: [],
       searchItems: [],
       stockList: [],
+      stockSymbols: [],
+      datePrices: [],
       user: '',
       value: '',
       userName: '',
@@ -105,7 +107,8 @@ class PortfolioMain extends React.Component {
   }
 
   handleSubmitLogin(event) {
-
+    const symbolsArr = [];
+    const datePriceArr = [];
     const username = this.state.userName;
     const password = this.state.userPassword;
     if (username.length < 5 && password < 6) {
@@ -131,11 +134,20 @@ class PortfolioMain extends React.Component {
                 Axios.get(`/price/${stockSymbolArr[t]}`)
                   .then((response) => {
                     currentPriceArr.push(response.data)
-                    ////////////////////////// NEED TO SEE IF THIS WORKS
-                    /////////////////////////////////////
-                    console.log('this should be an array of prices of stocks in the portfolio', currentPriceArr)
+                    currentPriceArr.map(item => {
+                        symbolsArr.push(item["Meta Data"]["2. Symbol"])
+                        datePriceArr.push(item["Time Series (Daily)"])
+                    })
                   })
-              }
+                }
+              this.setState({
+                stockList: response.data.data,
+                userId: response.data.id,
+                loggedIn: true,
+                newUser: false,
+                stockSymbols: symbolsArr,
+                datePrices: datePriceArr
+              })
             } else {
               this.setState({
                 stockList: response.data.data,
@@ -144,7 +156,6 @@ class PortfolioMain extends React.Component {
                 newUser: false
               })
             }
-
             console.log('this is state after logging in', this.state)
           } else {
             alert('Incorrect Login')
