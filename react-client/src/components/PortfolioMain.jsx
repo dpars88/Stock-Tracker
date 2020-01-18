@@ -108,8 +108,8 @@ class PortfolioMain extends React.Component {
   }
 
   handleSubmitLogin(event) {
-    const symbolsArr = [];
-    const datePriceArr = [];
+    let symbolsArr = [];
+    let datePriceArr = [];
     const username = this.state.userName;
     const password = this.state.userPassword;
     if (username.length < 5 && password < 6) {
@@ -130,17 +130,21 @@ class PortfolioMain extends React.Component {
               existingUserStocks.map(item => {
                 stockSymbolArr.push(item.stock_symbol)
               })
-              const currentPriceArr = [];
+              let currentPriceArr = [];
               for (var t = 0; t < stockSymbolArr.length; t ++) {
-                Axios.get(`/price/${stockSymbolArr[t]}`)
-                  .then((response) => {
-                    currentPriceArr.push(response.data)
-                    currentPriceArr.map(item => {
-                        symbolsArr.push(item["Meta Data"]["2. Symbol"])
-                        datePriceArr.push(item["Time Series (Daily)"])
+
+                  Axios.get(`/price/${stockSymbolArr[t]}`)
+                    .then((response) => {
+                      currentPriceArr.push(response.data)
+                      currentPriceArr.map(item => {
+                          symbolsArr.push(item["Meta Data"]["2. Symbol"])
+                          datePriceArr.push(item["Time Series (Daily)"])
+                      })
                     })
-                  })
-                }
+
+              }
+
+
               this.setState({
                 stockList: response.data.data,
                 userId: response.data.id,
