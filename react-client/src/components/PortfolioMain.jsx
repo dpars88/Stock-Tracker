@@ -153,6 +153,7 @@ class PortfolioMain extends React.Component {
                 stockSymbols: symbolsArr,
                 datePrices: datePriceArr
               })
+
             } else {
               this.setState({
                 stockList: response.data.data,
