@@ -143,8 +143,6 @@ class PortfolioMain extends React.Component {
                     })
 
               }
-
-
               this.setState({
                 stockList: response.data.data,
                 userId: response.data.id,
