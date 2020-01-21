@@ -132,7 +132,6 @@ class PortfolioMain extends React.Component {
               })
               let currentPriceArr = [];
               for (var t = 0; t < stockSymbolArr.length; t ++) {
-
                   Axios.get(`/price/${stockSymbolArr[t]}`)
                     .then((response) => {
                       currentPriceArr.push(response.data)
@@ -141,7 +140,6 @@ class PortfolioMain extends React.Component {
                           datePriceArr.push(item["Time Series (Daily)"])
                       })
                     })
-
               }
               this.setState({
                 stockList: response.data.data,
