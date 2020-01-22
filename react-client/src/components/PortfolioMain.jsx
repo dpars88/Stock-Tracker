@@ -124,7 +124,7 @@ class PortfolioMain extends React.Component {
             console.log('this is response after logging in',response.data)
             const responseData = response.data.data;
             const existingUserStocks = response.data.data; //array of objects
-
+            console.log(existingUserStocks);
             if (existingUserStocks.length > 0) {
               const stockSymbolArr = [];
               existingUserStocks.map(item => {
@@ -132,7 +132,15 @@ class PortfolioMain extends React.Component {
               })
               let currentPriceArr = [];
 
-              for (var t = 0; t < stockSymbolArr.length; t ++) {
+              const lookup = key => Axios.get(`/price/${key}`)
+              const processList = list => Promise.all(list.map(item => lookup(item)));
+
+              (async () => {
+                let dailyStockData = await processList(stockSymbolArr);
+                //console.log(results);
+              })();
+
+              for (var t = 0; t < dailyStockData.length; t ++) {
                   Axios.get(`/price/${stockSymbolArr[t]}`)
                     .then((response) => {
                       currentPriceArr.push(response.data)
