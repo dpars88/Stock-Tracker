@@ -118,10 +118,10 @@ class PortfolioMain extends React.Component {
       Axios.get(`/login/${username}/${password}`)
         .then((response) => {
           const stringName = username.toString();
-          console.log('this is response from DB user',response.data.user)
-          console.log('this is string name', stringName);
+          //console.log('this is response from DB user',response.data.user)
+          //console.log('this is string name', stringName);
           if (response.data.user === stringName) {
-            console.log('this is response adter logging in',response.data)
+            console.log('this is response after logging in',response.data)
             const responseData = response.data.data;
             const existingUserStocks = response.data.data; //array of objects
 
@@ -131,6 +131,7 @@ class PortfolioMain extends React.Component {
                 stockSymbolArr.push(item.stock_symbol)
               })
               let currentPriceArr = [];
+
               for (var t = 0; t < stockSymbolArr.length; t ++) {
                   Axios.get(`/price/${stockSymbolArr[t]}`)
                     .then((response) => {
