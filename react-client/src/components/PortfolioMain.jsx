@@ -135,6 +135,8 @@ class PortfolioMain extends React.Component {
               const lookup = key => Axios.get(`/price/${key}`)
               const processList = list => Promise.all(list.map(item => lookup(item)));
 
+              //below func was developed by using https://www.reddit.com/r/node/comments/bdmlts/async_await_with_api_calls_with_axios/
+
               (async () => {
                 let dailyStockData = await processList(stockSymbolArr);
                 console.log('this should be dailystock data', dailyStockData);
