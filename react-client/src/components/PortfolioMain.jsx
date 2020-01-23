@@ -149,6 +149,8 @@ class PortfolioMain extends React.Component {
                 })
               })();
 
+
+
               this.setState({
                 stockList: response.data.data,
                 userId: response.data.id,
@@ -305,7 +307,7 @@ class PortfolioMain extends React.Component {
             <SearchedList items={this.state.searchItems} />
           </div>
           <div>
-            <StockList items={this.state.stockList} />
+            <StockList items={this.state.stockList} datePrice={this.state.datePrices}/>
           </div>
           <div>
             <Chart />

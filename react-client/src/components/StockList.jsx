@@ -9,6 +9,8 @@ class StockList extends React.Component {
   }
 
   renderTableData() {
+    var today = moment().format('YYYY-MM-DD');
+    console.log('this should be todays date',typeof today);
     var count = 0;
     return this.props.items.map((item, index) => {
       const { stock_symbol, price_added } = item;
@@ -18,7 +20,6 @@ class StockList extends React.Component {
       count ++;
       return (
         <tr key={count}>
-          {/* <td>{id}</td> */}
           <td>{stock_symbol}</td>
           <td>{price_added}</td>
           <td>{dateAdd}</td>
