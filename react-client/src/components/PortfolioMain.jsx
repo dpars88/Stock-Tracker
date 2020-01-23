@@ -137,19 +137,16 @@ class PortfolioMain extends React.Component {
 
               (async () => {
                 let dailyStockData = await processList(stockSymbolArr);
-                //console.log(results);
+                console.log('this should be dailystock data', dailyStockData);
+                for (var t = 0; t < dailyStockData.length; t++) {
+                  currentPriceArr.push(dailyStockData[t]['data'])
+                }
+                currentPriceArr.map(items => {
+                  symbolsArr.push(items["Meta Data"]["2. Symbol"]);
+                  datePriceArr.push(items["Time Series (Daily)"]);
+                })
               })();
 
-              for (var t = 0; t < dailyStockData.length; t ++) {
-                  Axios.get(`/price/${stockSymbolArr[t]}`)
-                    .then((response) => {
-                      currentPriceArr.push(response.data)
-                      currentPriceArr.map(item => {
-                          symbolsArr.push(item["Meta Data"]["2. Symbol"])
-                          datePriceArr.push(item["Time Series (Daily)"])
-                      })
-                    })
-              }
               this.setState({
                 stockList: response.data.data,
                 userId: response.data.id,
