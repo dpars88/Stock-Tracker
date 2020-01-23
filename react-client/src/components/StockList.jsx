@@ -29,7 +29,7 @@ class StockList extends React.Component {
 
   renderTableHeader() {
     let header = Object.keys(this.props.items[0]);
-    let headerTwo = ['Stock Symbol', 'Price Added', 'Date Added', 'Current Price', 'Edit Date Add', 'Remove']
+    let headerTwo = ['Stock Symbol', 'Price Added', 'Date Added', 'Current Price', 'Edit Date Added', 'Remove']
     // header = header.slice(1, header.length);
     headerTwo = headerTwo.slice(0, headerTwo.length);
     return headerTwo.map((key, index) => {
