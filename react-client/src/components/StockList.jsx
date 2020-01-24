@@ -12,6 +12,17 @@ class StockList extends React.Component {
     var today = moment().format('YYYY-MM-DD');
     console.log('this should be todays date',typeof today);
     var count = 0;
+    var currentPrices = this.props.datePrice;
+    // var prices = [];
+    // console.log('this should be currentprices', currentPrices)
+    // currentPrices.map(item => {
+    //   console.log(item);
+    //   if (item === today) {
+    //     console.log('found it!');
+    //     prices.push(item['1. open']);
+    //   }
+    // })
+    // console.log('this should be an array of prices', prices);
     return this.props.items.map((item, index) => {
       const { stock_symbol, price_added } = item;
       let dateAdd = item.date_added;
