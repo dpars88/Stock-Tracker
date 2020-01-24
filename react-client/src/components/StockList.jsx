@@ -23,6 +23,7 @@ class StockList extends React.Component {
     //   }
     // })
     // console.log('this should be an array of prices', prices);
+
     return this.props.items.map((item, index) => {
       const { stock_symbol, price_added } = item;
       let dateAdd = item.date_added;
