@@ -26,6 +26,7 @@ class StockList extends React.Component {
 
     // new idea to use API call that is used for searching since it brings back updated price data use that to get todays price and then use data that was retrieved for each stock in portfolio for graph only
 
+
     return this.props.items.map((item, index) => {
       const { stock_symbol, price_added } = item;
       let dateAdd = item.date_added;
