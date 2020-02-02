@@ -24,6 +24,8 @@ class StockList extends React.Component {
     // })
     // console.log('this should be an array of prices', prices);
 
+
+
     // new idea to use API call that is used for searching since it brings back updated price data use that to get todays price and then use data that was retrieved for each stock in portfolio for graph only
 
 
