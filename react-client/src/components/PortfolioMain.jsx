@@ -1,7 +1,6 @@
 import React from 'react';
 import ListItem from './ListItem.jsx';
 import StockList from './StockList.jsx';
-import $ from 'jquery';
 import Axios from 'axios';
 import SearchedList from './SearchedList.jsx';
 import data from '../../../sampleAPIdata.js';
