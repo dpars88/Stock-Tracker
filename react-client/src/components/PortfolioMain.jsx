@@ -199,7 +199,7 @@ class PortfolioMain extends React.Component {
 
   }
 
-  currentPrices(event) {
+  currentPrices() {
     let currentSymbols = this.state.stockSymbols;
     let quoteArr = [];
 
@@ -208,16 +208,26 @@ class PortfolioMain extends React.Component {
 
     (async () => {
       let stockQuoteData = await quoteProcess(currentSymbols);
+      console.log('this should be a array of objects with prices of stocks in portfolio, msft apple tesla jnj',stockQuoteData)
       for (var q = 0; q < stockQuoteData.length; q++) {
-        let quoteObj = stockQuoteData[q]['Global Quote']
-        quoteArr.push(quoteObj["05. price"])
+        let quoteObj = stockQuoteData[q]['data'];
+        let quoteObjTwo = quoteObj['Global Quote']; //this is a single quote
+        quoteArr.push(quoteObjTwo["05. price"]) //pushing a single quote price into a array
+        console.log('this is current prices in QUOTEARR', quoteArr);
       }
     })();
 
     this.setState({
       quotePrices: quoteArr
     })
-    event.preventDefault();
+    console.log('this is the state after adding quotePrices in', this.state)
+
+//LEFT OFF WORKING HERE, everything is working okay just having troubles with AlphaVantage preventing from doing too many hits to their api
+
+    //event.preventDefault();
+
+
+
   }
 
   logOut() {
