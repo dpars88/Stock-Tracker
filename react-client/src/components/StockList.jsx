@@ -8,26 +8,34 @@ class StockList extends React.Component {
     super(props);
   }
 
+  // currentPrices(event) {
+  //   let currentSymbols = this.state.stockSymbols;
+  //   let quoteArr = [];
+
+  //   const quote = key => Axios.get(`/current/${key}`);
+  //   const quoteProcess = list => Promise.all(list.map(item => quote(item)));
+
+  //   (async () => {
+  //     let stockQuoteData = await quoteProcess(currentSymbols);
+  //     for (var q = 0; q < stockQuoteData.length; q++) {
+  //       let quoteObj = stockQuoteData[q]['Global Quote']
+  //       quoteArr.push(quoteObj["05. price"])
+  //     }
+  //   })();
+
+  //   this.setState({
+  //     quotePrices: quoteArr
+  //   })
+  //   event.preventDefault();
+  // }
+
   renderTableData() {
     var today = moment().format('YYYY-MM-DD');
     console.log('this should be todays date',typeof today);
     var count = 0;
     var currentPrices = this.props.datePrice;
-    // var prices = [];
-    // console.log('this should be currentprices', currentPrices)
-    // currentPrices.map(item => {
-    //   console.log(item);
-    //   if (item === today) {
-    //     console.log('found it!');
-    //     prices.push(item['1. open']);
-    //   }
-    // })
-    // console.log('this should be an array of prices', prices);
-
-
 
     // new idea to use API call that is used for searching since it brings back updated price data use that to get todays price and then use data that was retrieved for each stock in portfolio for graph only
-
 
     return this.props.items.map((item, index) => {
       const { stock_symbol, price_added } = item;
@@ -60,9 +68,12 @@ class StockList extends React.Component {
       <div>
         <h4> Current Portfolio </h4>
         You have {this.props.items.length} items in your portfolio
-        {/* <ul>
-          {props.items.map(item => <PortfolioList key={item.stock_symbol} item={item} />)}
-        </ul> */}
+        <div>
+          Get most up to date prices!
+          <button onClick={this.props.latest}>
+            Refresh Prices
+          </button>
+        </div>
         <table className="stocks">
           <tbody>
             <tr>{this.renderTableHeader()}</tr>

@@ -15,6 +15,7 @@ class PortfolioMain extends React.Component {
       stockList: [],
       stockSymbols: [],
       datePrices: [],
+      quotePrices: [],
       user: '',
       value: '',
       userName: '',
@@ -34,6 +35,7 @@ class PortfolioMain extends React.Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.handleAddStock = this.handleAddStock.bind(this);
     this.handleRemoveStock = this.handleRemoveStock.bind(this);
+    this.currentPrices = this.currentPrices.bind(this);
   }
 
   handleSearch(event) {
@@ -197,6 +199,27 @@ class PortfolioMain extends React.Component {
 
   }
 
+  currentPrices(event) {
+    let currentSymbols = this.state.stockSymbols;
+    let quoteArr = [];
+
+    const quote = key => Axios.get(`/current/${key}`);
+    const quoteProcess = list => Promise.all(list.map(item => quote(item)));
+
+    (async () => {
+      let stockQuoteData = await quoteProcess(currentSymbols);
+      for (var q = 0; q < stockQuoteData.length; q++) {
+        let quoteObj = stockQuoteData[q]['Global Quote']
+        quoteArr.push(quoteObj["05. price"])
+      }
+    })();
+
+    this.setState({
+      quotePrices: quoteArr
+    })
+    event.preventDefault();
+  }
+
   logOut() {
     this.setState({
       loggedIn: false,
@@ -304,7 +327,7 @@ class PortfolioMain extends React.Component {
             <SearchedList items={this.state.searchItems} />
           </div>
           <div>
-            <StockList items={this.state.stockList} datePrice={this.state.datePrices}/>
+            <StockList items={this.state.stockList} datePrice={this.state.datePrices} latest={this.currentPrices}/>
           </div>
           <div>
             <Chart />

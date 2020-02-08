@@ -46,6 +46,10 @@ app.get('/price/:symbol', function (req, res) {
     })
 })
 
+app.get('/current', function (req,res) {
+
+})
+
 app.post('/save', function(req, res) {
   db.addUser(req.body, res)
 })
