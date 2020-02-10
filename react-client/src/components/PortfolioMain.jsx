@@ -224,6 +224,7 @@ class PortfolioMain extends React.Component {
 
 //LEFT OFF WORKING HERE, everything is working okay just having troubles with AlphaVantage preventing from doing too many hits to their api
 
+
     //event.preventDefault();
 
 
