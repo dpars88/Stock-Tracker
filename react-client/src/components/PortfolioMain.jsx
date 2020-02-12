@@ -5,6 +5,8 @@ import Axios from 'axios';
 import SearchedList from './SearchedList.jsx';
 import data from '../../../sampleAPIdata.js';
 import Chart from './Chart.jsx';
+import SampleStockUpdateData from '../../../sampleStockUpdateData.js';
+import SampleTableData from '../../../sampleTableData.js';
 
 class PortfolioMain extends React.Component {
   constructor(props) {
@@ -137,7 +139,9 @@ class PortfolioMain extends React.Component {
               const processList = list => Promise.all(list.map(item => lookup(item)));
 
               //below func was developed by using https://www.reddit.com/r/node/comments/bdmlts/async_await_with_api_calls_with_axios/
-
+              /* THE BELOW WORKS WILL BE USING SAMPLE DATA INSTEAD OF THIS API CALL
+              THIS CALL BRINGS BACK DAILY STOCK DATA WHICH SAMPLE DATA CAN BE FOUND AT
+              SAMPLETABLEDATA.JS
               (async () => {
                 let dailyStockData = await processList(stockSymbolArr);
                 console.log('this should be dailystock data', dailyStockData);
@@ -149,6 +153,18 @@ class PortfolioMain extends React.Component {
                   datePriceArr.push(items["Time Series (Daily)"]);
                 })
               })();
+              */
+
+              let dailyStockData = SampleTableData;
+              console.log('this is dailystockdata', dailyStockData)
+              for (var t = 0; t < dailyStockData.length; t++) {
+                currentPriceArr.push(dailyStockData[t]['data'])
+              }
+              console.log('this is current price arr', currentPriceArr)
+              currentPriceArr.map(items => {
+                symbolsArr.push(items["Meta Data"]["2. Symbol"]);
+                datePriceArr.push(items["Time Series (Daily)"]);
+              })
 
               this.setState({
                 stockList: response.data.data,
@@ -190,8 +206,8 @@ class PortfolioMain extends React.Component {
         this.setState({
           stockList: response.data,
           value: ''
-        })
-      })
+        });
+      });
     event.preventDefault()
   }
 
@@ -200,12 +216,15 @@ class PortfolioMain extends React.Component {
   }
 
   currentPrices() {
+    //e.preventDefault();
+    this.setState({quotePrices: ['hello']})
     let currentSymbols = this.state.stockSymbols;
     let quoteArr = [];
 
     const quote = key => Axios.get(`/current/${key}`);
     const quoteProcess = list => Promise.all(list.map(item => quote(item)));
 
+    /* THE BELOW WORKS, TO USE SAMPLE DATA USE SAMPLESTOCKUPDATEDATA.JS INSTEAD
     (async () => {
       let stockQuoteData = await quoteProcess(currentSymbols);
       console.log('this should be a array of objects with prices of stocks in portfolio, msft apple tesla jnj',stockQuoteData)
@@ -216,20 +235,30 @@ class PortfolioMain extends React.Component {
         console.log('this is current prices in QUOTEARR', quoteArr);
       }
     })();
+    */
 
-    this.setState({
-      quotePrices: quoteArr
-    })
+   let stockQuoteData = SampleStockUpdateData;
+
+   if(stockQuoteData.length >= 0) {
+     for (var q = 0; q < stockQuoteData.length; q++) {
+       let quoteObj = stockQuoteData[q]['data'];
+       let quoteObjTwo = quoteObj['Global Quote']; //this is a single quote
+       quoteArr.push(quoteObjTwo["05. price"]) //pushing a single quote price into a array
+      };
+      console.log('this is current prices in QUOTEARR', quoteArr);
+
+      // this.setState({
+      //   quotePrices: 'hello'
+      // });
+   }
+
     console.log('this is the state after adding quotePrices in', this.state)
 
-//LEFT OFF WORKING HERE, everything is working okay just having troubles with AlphaVantage preventing from doing too many hits to their api
-
-
-    //event.preventDefault();
+    //LEFT OFF WORKING HERE, everything is working okay just having troubles with AlphaVantage preventing from doing too many hits to their api
 
 
 
-  }
+  };
 
   logOut() {
     this.setState({
@@ -239,6 +268,7 @@ class PortfolioMain extends React.Component {
   }
 
   componentDidMount() {
+
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { VictoryLine, VictoryChart, VictoryVoronoiContainer } from 'victory';
+import { VictoryLine, VictoryChart, VictoryVoronoiContainer, VictoryTheme } from 'victory';
 
 //https://formidable.com/open-source/victory/docs/
 
@@ -7,11 +7,23 @@ class Chart extends React.Component {
   render() {
     return (
 
-      <VictoryChart>
-        <VictoryVoronoiContainer
-      labels={({ datum }) => `${round(datum.x, 2)}, ${round(datum.y, 2)}`}
-    />
-        <VictoryLine y={(datum) => Math.sin(2 * Math.PI * datum.x)}/>
+      <VictoryChart
+        theme={VictoryTheme.material}
+      >
+        <VictoryLine
+          style={{
+            data: { stroke: "#c43a31" },
+            parent: { border: "1px solid #ccc"}
+          }}
+          data={[
+            //this.props.data?
+            { x: 1, y: 2 },
+            { x: 2, y: 3 },
+            { x: 3, y: 5 },
+            { x: 4, y: 4 },
+            { x: 5, y: 7 }
+          ]}
+          />
 
       </VictoryChart>
 

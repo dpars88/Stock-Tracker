@@ -6,28 +6,9 @@ const moment = require('moment');
 class StockList extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleClick = this.handleClick.bind(this);
   }
-
-  // currentPrices(event) {
-  //   let currentSymbols = this.state.stockSymbols;
-  //   let quoteArr = [];
-
-  //   const quote = key => Axios.get(`/current/${key}`);
-  //   const quoteProcess = list => Promise.all(list.map(item => quote(item)));
-
-  //   (async () => {
-  //     let stockQuoteData = await quoteProcess(currentSymbols);
-  //     for (var q = 0; q < stockQuoteData.length; q++) {
-  //       let quoteObj = stockQuoteData[q]['Global Quote']
-  //       quoteArr.push(quoteObj["05. price"])
-  //     }
-  //   })();
-
-  //   this.setState({
-  //     quotePrices: quoteArr
-  //   })
-  //   event.preventDefault();
-  // }
 
   renderTableData() {
     var today = moment().format('YYYY-MM-DD');
@@ -63,6 +44,11 @@ class StockList extends React.Component {
     })
   }
 
+  handleClick() {
+    //e.preventDefault();
+    this.props.latest();
+  }
+
   render() {
     return (
       <div>
@@ -70,7 +56,7 @@ class StockList extends React.Component {
         You have {this.props.items.length} items in your portfolio
         <div>
           Get most up to date prices!
-          <button onClick={this.props.latest}>
+          <button onClick={this.handleClick}>
             Refresh Prices
           </button>
         </div>
