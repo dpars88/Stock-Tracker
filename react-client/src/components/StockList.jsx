@@ -11,15 +11,25 @@ class StockList extends React.Component {
   }
 
   renderTableData() {
-    var today = moment().format('YYYY-MM-DD');
-    console.log('this should be todays date',typeof today);
+    // var today = moment().format('YYYY-MM-DD');
+    // console.log('this should be todays date',typeof today);
     var count = 0;
-    var currentPrices = this.props.datePrice;
-
+    var currentPrices = this.props.quotePrices
+    console.log('this is current prices',currentPrices)
     // new idea to use API call that is used for searching since it brings back updated price data use that to get todays price and then use data that was retrieved for each stock in portfolio for graph only
+    var portfolioItems = this.props.items;
+
+    var currentPricesCount = 0;
+    portfolioItems.map((item) => {
+      item['price'] = currentPrices[currentPricesCount];
+      currentPricesCount ++;
+    })
+
+    console.log('this is portfolio items', portfolioItems)
+
 
     return this.props.items.map((item, index) => {
-      const { stock_symbol, price_added } = item;
+      const { stock_symbol, price_added, price } = item;
       let dateAdd = item.date_added;
       dateAdd = moment(dateAdd).format('MM-DD-YYYY');
       let id = item.id;
@@ -29,6 +39,7 @@ class StockList extends React.Component {
           <td>{stock_symbol}</td>
           <td>{price_added}</td>
           <td>{dateAdd}</td>
+          <td>{price}</td>
         </tr>
       )
     })

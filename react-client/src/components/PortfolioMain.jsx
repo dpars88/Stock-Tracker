@@ -245,14 +245,14 @@ class PortfolioMain extends React.Component {
        let quoteObjTwo = quoteObj['Global Quote']; //this is a single quote
        quoteArr.push(quoteObjTwo["05. price"]) //pushing a single quote price into a array
       };
-      console.log('this is current prices in QUOTEARR', quoteArr);
+      //console.log('this is current prices in QUOTEARR', quoteArr);
 
-      // this.setState({
-      //   quotePrices: 'hello'
-      // });
+      this.setState({
+        quotePrices: quoteArr
+      });
    }
 
-    console.log('this is the state after adding quotePrices in', this.state)
+    //console.log('this is the state after adding quotePrices in', this.state)
 
     //LEFT OFF WORKING HERE, everything is working okay just having troubles with AlphaVantage preventing from doing too many hits to their api
 
@@ -368,7 +368,7 @@ class PortfolioMain extends React.Component {
             <SearchedList items={this.state.searchItems} />
           </div>
           <div>
-            <StockList items={this.state.stockList} datePrice={this.state.datePrices} latest={this.currentPrices}/>
+            <StockList items={this.state.stockList} quotePrices={this.state.quotePrices} latest={this.currentPrices}/>
           </div>
           <div>
             <Chart />
