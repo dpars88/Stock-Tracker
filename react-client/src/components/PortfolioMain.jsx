@@ -48,7 +48,6 @@ class PortfolioMain extends React.Component {
     if(symbol.length > 0) {
       Axios.get(`/search/${symbol}`)
         .then((response) => {
-          console.log('this should be the search response from API', response.data.bestMatches);
           var data = response.data.bestMatches;
           data = data.slice(0,4);
           this.setState({
@@ -121,10 +120,7 @@ class PortfolioMain extends React.Component {
       Axios.get(`/login/${username}/${password}`)
         .then((response) => {
           const stringName = username.toString();
-          //console.log('this is response from DB user',response.data.user)
-          //console.log('this is string name', stringName);
           if (response.data.user === stringName) {
-            console.log('this is response after logging in',response.data)
             const responseData = response.data.data;
             const existingUserStocks = response.data.data; //array of objects
             console.log(existingUserStocks);
@@ -140,8 +136,6 @@ class PortfolioMain extends React.Component {
 
               //below func was developed by using https://www.reddit.com/r/node/comments/bdmlts/async_await_with_api_calls_with_axios/
               /* THE BELOW WORKS WILL BE USING SAMPLE DATA INSTEAD OF THIS API CALL
-              THIS CALL BRINGS BACK DAILY STOCK DATA WHICH SAMPLE DATA CAN BE FOUND AT
-              SAMPLETABLEDATA.JS
               (async () => {
                 let dailyStockData = await processList(stockSymbolArr);
                 console.log('this should be dailystock data', dailyStockData);
@@ -156,11 +150,9 @@ class PortfolioMain extends React.Component {
               */
 
               let dailyStockData = SampleTableData;
-              console.log('this is dailystockdata', dailyStockData)
               for (var t = 0; t < dailyStockData.length; t++) {
                 currentPriceArr.push(dailyStockData[t]['data'])
               }
-              console.log('this is current price arr', currentPriceArr)
               currentPriceArr.map(items => {
                 symbolsArr.push(items["Meta Data"]["2. Symbol"]);
                 datePriceArr.push(items["Time Series (Daily)"]);
@@ -183,7 +175,6 @@ class PortfolioMain extends React.Component {
                 newUser: false
               })
             }
-            console.log('this is state after logging in', this.state)
           } else {
             alert('Incorrect Login')
           }
@@ -216,7 +207,6 @@ class PortfolioMain extends React.Component {
   }
 
   currentPrices() {
-    //e.preventDefault();
     this.setState({quotePrices: ['hello']})
     let currentSymbols = this.state.stockSymbols;
     let quoteArr = [];
@@ -245,19 +235,10 @@ class PortfolioMain extends React.Component {
        let quoteObjTwo = quoteObj['Global Quote']; //this is a single quote
        quoteArr.push(quoteObjTwo["05. price"]) //pushing a single quote price into a array
       };
-      //console.log('this is current prices in QUOTEARR', quoteArr);
-
       this.setState({
         quotePrices: quoteArr
       });
-   }
-
-    //console.log('this is the state after adding quotePrices in', this.state)
-
-    //LEFT OFF WORKING HERE, everything is working okay just having troubles with AlphaVantage preventing from doing too many hits to their api
-
-
-
+   };
   };
 
   logOut() {
@@ -371,7 +352,7 @@ class PortfolioMain extends React.Component {
             <StockList items={this.state.stockList} quotePrices={this.state.quotePrices} latest={this.currentPrices}/>
           </div>
           <div>
-            <Chart />
+            <Chart datePrices={this.state.datePrices}/>
           </div>
         </div>
       )
