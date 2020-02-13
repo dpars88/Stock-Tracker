@@ -55,11 +55,11 @@ class Chart extends React.Component {
         theme={VictoryTheme.material}
         // minDomain={{x:0, y:0}}
         data={first}
-        containerComponent={
-          <VictoryVoronoiContainer
-            labels={({ first }) => `${first['x']}, ${first['y']}`}
-          />
-        }
+        // containerComponent={
+        //   <VictoryVoronoiContainer
+        //     labels={({ first }) => `${first['x']}, ${first['y']}`}
+        //   />
+        // }
       >
         <VictoryLine
           interpolation='linear'
