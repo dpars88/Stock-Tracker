@@ -7,9 +7,9 @@ class Chart extends React.Component {
   constructor(props) {
     super(props);
   }
-      renderLine() {
+  renderLine() {
 
-      }
+  }
 
   render() {
     var rawData = this.props.datePrices
@@ -20,6 +20,7 @@ class Chart extends React.Component {
     //var properDate;
     //var myObj;
     var chartData = [];
+    var first = [];
 
     if (rawData.length > 0) {
       rawData.map((item) => {
@@ -43,6 +44,7 @@ class Chart extends React.Component {
           }
           chartData.push(eachArr);
       })
+      first = chartData[0]
     }
 
     return (
@@ -52,12 +54,17 @@ class Chart extends React.Component {
         scale={{y: 'linear'}}
         theme={VictoryTheme.material}
         // minDomain={{x:0, y:0}}
-        data={chartData[0]}
+        data={first}
+        containerComponent={
+          <VictoryVoronoiContainer
+            labels={({ first }) => `${first['x']}, ${first['y']}`}
+          />
+        }
       >
         <VictoryLine
           interpolation='linear'
-          data={chartData[0]}
-          x={chartData[0]['x']} y={chartData[0]['y']}
+          data={first}
+          x={first['x']} y={first['y']}
           style={{
             data: { stroke: "#c43a31" },
             parent: { border: "1px solid #ccc"}
