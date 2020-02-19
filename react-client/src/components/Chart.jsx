@@ -78,6 +78,9 @@ class Chart extends React.Component {
             data: { stroke: "#c43a31" },
             parent: { border: "1px solid #ccc"}
           }}
+
+          So still working on how to add it multiple lines and have as many lines per the count of items in the portfolio
+
           /> */}
 
       </VictoryChart>
