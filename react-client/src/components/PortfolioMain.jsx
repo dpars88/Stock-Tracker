@@ -7,6 +7,7 @@ import data from '../../../sampleAPIdata.js';
 import Chart from './Chart.jsx';
 import SampleStockUpdateData from '../../../sampleStockUpdateData.js';
 import SampleTableData from '../../../sampleTableData.js';
+//import styles from './styles/PortfolioMain.css';
 
 class PortfolioMain extends React.Component {
   constructor(props) {
