@@ -35,6 +35,43 @@ module.exports = {
         ]
       }
     ]
-  },
-  mode: "development"
+  }
 };
+
+// var path = require('path');
+
+// module.exports = {
+//   entry: path.resolve(__dirname, 'react-client', 'src', 'index.jsx'),
+//   output: {
+//     filename: 'bundle.js',
+//     path: path.resolve(__dirname, 'dist'),
+//   },
+//   resolve: {
+//     extensions: ['.jsx', '.js', '.json', '.css']
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.(js|jsx)$/,
+//         exclude: /node_modules/,
+//         use: {
+//           loader: 'babel-loader'
+//         }
+//       },
+//       {
+//         test: /\.css$/,
+//         use: [
+//           'style-loader',
+//           {
+//             loader: 'css-loader',
+//             options: {
+//               importLoaders: 1,
+//               modules: true,
+//               mode: 'development'
+//             }
+//           }
+//         ]
+//       }
+//     ]
+//   }
+// };
