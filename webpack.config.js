@@ -38,6 +38,8 @@ module.exports = {
   }
 };
 
+// Still need to fix webpack for CSS Modules to work properly, need to finish reading docs
+
 // var path = require('path');
 
 // module.exports = {
