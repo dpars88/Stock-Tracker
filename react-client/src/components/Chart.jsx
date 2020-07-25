@@ -79,7 +79,7 @@ class Chart extends React.Component {
             parent: { border: "1px solid #ccc"}
           }}
           animate={{
-            delay: 2000,
+            delay: 1500,
             duration: 5000,
           }}
         />
